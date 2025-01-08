@@ -11,7 +11,7 @@ OBJ = $(SRC:.c=.o)
 # Test files
 TEST_SRC = test/sensor_test.cpp
 TEST_OBJ = $(TEST_SRC:.cpp=.o)
-TEST_TARGET = test
+TEST_TARGET = test_executable
 
 # Default target
 all: $(TARGET)
@@ -24,9 +24,12 @@ $(TARGET): $(OBJ)
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
-# Build and run the tests
+# Build the tests
 test: $(TEST_OBJ) $(OBJ)
-	$(CC) $(CFLAGS) $(TEST_OBJ) $(OBJ) -o $@ $(LDFLAGS)
+	$(CC) $(CFLAGS) $(TEST_OBJ) $(OBJ) -o $(TEST_TARGET) $(LDFLAGS)
+
+# Run the tests
+test_run: test
 	./$(TEST_TARGET)
 
 # Compile test files into .o files
