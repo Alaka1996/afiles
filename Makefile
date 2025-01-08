@@ -1,10 +1,10 @@
 # Compiler and flags
 CC = gcc
-CFLAGS = -Wall -Wextra -std=c11
+CFLAGS = -Wall -Wextra -std=c11 -I./include
 
 # Project files
 TARGET = sensor_program
-SRC = main.c sensor.c
+SRC = src/sensor.c main.c
 OBJ = $(SRC:.c=.o)
 
 # Default target
@@ -15,7 +15,7 @@ $(TARGET): $(OBJ)
 	$(CC) $(CFLAGS) -o $@ $^
 
 # Compile each .c file into a .o file
-%.o: %.c sensor.h
+%.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
 # Clean up compiled files
