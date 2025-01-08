@@ -17,7 +17,7 @@ $(EXEC): $(OBJ)
 
 cppcheck:
 	cppcheck --enable=all --inconclusive --force --quiet --error-exitcode=1 \
-	-Iinclude -I/usr/include -I/usr/lib/gcc/x86_64-linux-gnu/$(shell gcc -dumpversion)/include $(SRC)
+	--suppress=missingIncludeSystem -Iinclude $(SRC)
 
 clean:
 	rm -f $(OBJ) $(EXEC)
