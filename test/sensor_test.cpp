@@ -1,6 +1,23 @@
 #include <gtest/gtest.h>
 #include "sensor.h"  // Include the sensor.h header for the calculate_average function
 
+// Test Fixture for Sensor Functions
+class SensorTest : public ::testing::Test {
+protected:
+    uint16_t *sensor_data;
+    int size = BUFFER_SIZE;
+
+    // This function runs before each test case
+    void SetUp() override {
+        sensor_data = (uint16_t *)malloc(size * sizeof(uint16_t));
+    }
+
+    // This function runs after each test case
+    void TearDown() override {
+        free(sensor_data);
+    }
+};
+
 // Test Case 1: Test `calculate_average` with normal data
 TEST_F(SensorTest, CalculateAverageNormalDataTest) {
     // Fill the data array with known values
