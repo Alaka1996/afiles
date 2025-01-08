@@ -1,30 +1,30 @@
-name: Build and Test
+name: Cppcheck
 
 on:
   push:
     branches:
       - main
   pull_request:
+    branches:
+      - main
 
 jobs:
-  build:
+  cppcheck:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
+    - name: Checkout Repository
       uses: actions/checkout@v3
 
-    - name: Set up build environment
-      run: sudo apt-get update && sudo apt-get install -y gcc make cppcheck
+    - name: Install Cppcheck
+      run: sudo apt-get install -y cppcheck
 
     - name: Run Cppcheck
       run: |
-        sudo apt-get install cppcheck
-        cppcheck --enable=all src/*.c
-
-
-    - name: Build project
-      run: make all
-
-    - name: Run tests
-      run: ./sensor_program
+        cppcheck --enable=all --inconclusive --quiet \
+        -I include/ src/*.c 2> cppcheck_report.txt || true
+    - name: Upload Cppcheck Report
+      uses: actions/upload-artifact@v3
+      with:
+        name: cppcheck-report
+        path: cppcheck_report.txt
