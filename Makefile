@@ -28,9 +28,9 @@ run: $(TARGET)
 
 # Cppcheck target for static analysis
 cppcheck:
-	# Run cppcheck on source files and generate the report in cppcheck_reports directory
-	mkdir -p cppcheck_reports
-	cppcheck --enable=all --inconclusive --quiet --force $(SRC) > cppcheck_reports/report.txt
+    mkdir -p cppcheck_reports
+    cppcheck --enable=all --inconclusive --quiet --force --suppress=missingInclude $(SRC) > cppcheck_reports/report.txt
+
 
 # Combined check target to run cppcheck and then build
 check: cppcheck all
