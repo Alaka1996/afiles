@@ -18,7 +18,8 @@ jobs:
       run: sudo apt-get update && sudo apt-get install -y gcc make cppcheck
 
     - name: Run Cppcheck (Static Analysis)
-      run: cppcheck --enable=all --inconclusive --force --quiet --error-exitcode=1 .
+      run: |
+        cppcheck --enable=all --inconclusive --force --quiet --error-exitcode=1 --std=c99 --platform=linux64 -I./include src main.c
 
     - name: Build project
       run: make all
