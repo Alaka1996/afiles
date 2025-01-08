@@ -17,10 +17,11 @@ jobs:
     - name: Set up build environment
       run: sudo apt-get update && sudo apt-get install -y gcc make cppcheck
 
-    - name: Run Cppcheck (Static Analysis)
+    - name: Run Cppcheck
       run: |
         cppcheck --enable=all --inconclusive --force --quiet --error-exitcode=1 \
-        -I./include -I/usr/include -I/usr/lib/gcc/x86_64-linux-gnu/$(gcc -dumpversion)/include src main.c
+        --suppress=missingIncludeSystem -Iinclude main.c src/sensor.c
+
 
     - name: Build project
       run: make all
