@@ -1,6 +1,7 @@
 // main.c
 #include "sensor.h"
 #include <stdlib.h>
+#include <stdio.h>
 
 
 int main() {
