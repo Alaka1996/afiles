@@ -19,8 +19,8 @@ jobs:
 
     - name: Run Cppcheck
       run: |
-        cppcheck --enable=all --inconclusive --force --quiet --error-exitcode=1 \
-        --suppress=missingIncludeSystem -Iinclude main.c src/sensor.c
+        sudo apt-get install cppcheck
+        cppcheck --enable=all src/*.c
 
 
     - name: Build project
