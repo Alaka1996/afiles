@@ -14,21 +14,8 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v3
 
-    - name: Set up build environment
-      run: sudo apt-get update && sudo apt-get install -y gcc g++ make cmake git
+    - name: Set up dependencies
+      run: sudo apt-get update && sudo apt-get install -y gcc g++ make libgtest-dev cmake
 
-    - name: Install Google Test
-      run: |
-        git clone https://github.com/google/googletest.git
-        cd googletest
-        cmake CMakeLists.txt
-        sudo make install
-
-    - name: Build project
-      run: make all
-
-    - name: Run tests
+    - name: Build and Test
       run: make test_run
-
-    - name: Run Cppcheck
-      run: cppcheck --enable=all --inconclusive --quiet --force src/sensor.c main.c test/sensor_test.cpp > cppcheck_report.txt
