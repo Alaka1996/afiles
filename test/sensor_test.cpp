@@ -1,5 +1,7 @@
-#include <gtest/gtest.h>
+extern "C" {
 #include "sensor.h"  // Include the sensor.h header for the calculate_average function
+}
+#include <gtest/gtest.h>
 
 // Test Fixture for Sensor Functions
 class SensorTest : public ::testing::Test {
