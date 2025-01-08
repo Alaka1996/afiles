@@ -1,6 +1,6 @@
 # Compiler and flags
 CC = g++
-CFLAGS = -Wall -Wextra -std=c++11 -I./include
+CFLAGS = -Wall -Wextra -std=c++14 -I./include
 GTEST_DIR = /path/to/googletest    # Path to Google Test source code or installed location
 GTEST_LIB = $(GTEST_DIR)/build/libgtest.a  # The static library of Google Test
 
