@@ -19,7 +19,7 @@ jobs:
 
     - name: Run Cppcheck (Static Analysis)
       run: |
-        cppcheck --enable=all --inconclusive --force --quiet --error-exitcode=1 --std=c99 --platform=linux64 -I./include src main.c
+        cppcheck --enable=all --inconclusive --force --quiet --error-exitcode=1 -I./include src main.c
 
     - name: Build project
       run: make all
