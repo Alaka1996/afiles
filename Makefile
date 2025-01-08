@@ -1,17 +1,15 @@
 # Compiler and flags
 CC = g++
 CFLAGS = -Wall -Wextra -std=c++11 -I./include
-LDFLAGS = -lgtest -lgtest_main -pthread
+GTEST_DIR = /path/to/googletest    # Path to Google Test source code or installed location
+GTEST_LIB = $(GTEST_DIR)/build/libgtest.a  # The static library of Google Test
 
 # Project files
 TARGET = sensor_program
 SRC = src/sensor.c main.c
 OBJ = $(SRC:.c=.o)
-
-# Test files
-TEST_SRC = test/sensor_test.cpp
+TEST_SRC = test/sensor_test.cpp  # Path to your test source file
 TEST_OBJ = $(TEST_SRC:.cpp=.o)
-TEST_TARGET = test_executable
 
 # Default target
 all: $(TARGET)
@@ -24,18 +22,26 @@ $(TARGET): $(OBJ)
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
-# Build the tests
+# Compile the test file
 test: $(TEST_OBJ) $(OBJ)
-	$(CC) $(CFLAGS) $(TEST_OBJ) $(OBJ) -o $(TEST_TARGET) $(LDFLAGS)
+	$(CC) $(CFLAGS) -o test_runner $(TEST_OBJ) $(OBJ) $(GTEST_LIB) -pthread
+
+# Run the program
+run: $(TARGET)
+	./$(TARGET)
 
 # Run the tests
 test_run: test
-	./$(TEST_TARGET)
-
-# Compile test files into .o files
-%.o: %.cpp
-	$(CC) $(CFLAGS) -c $< -o $@
+	./test_runner
 
 # Clean up compiled files
 clean:
-	rm -f $(OBJ) $(TEST_OBJ) $(TARGET) $(TEST_TARGET)
+	rm -f $(OBJ) $(TARGET) $(TEST_OBJ) test_runner
+
+# Cppcheck target for static analysis
+cppcheck:
+	mkdir -p cppcheck_reports
+	cppcheck --enable=all --inconclusive --quiet --force $(SRC) $(TEST_SRC) > cppcheck_reports/report.txt
+
+# Combined check target to run cppcheck and then build
+check: cppcheck all
