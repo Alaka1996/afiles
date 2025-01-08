@@ -18,6 +18,10 @@ $(TARGET): $(OBJ)
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
+# Static analysis with cppcheck
+cppcheck:
+	cppcheck --enable=all --inconclusive --force --quiet --error-exitcode=1 .
+
 # Clean up compiled files
 clean:
 	rm -f $(OBJ) $(TARGET)
