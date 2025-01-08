@@ -1,31 +1,23 @@
-# Compiler and flags
 CC = gcc
-CFLAGS = -Wall -Wextra -std=c11 -I./include
-
-# Project files
-TARGET = sensor_program
+CFLAGS = -Wall -Wextra -std=c11 -Iinclude
+LDFLAGS =
 SRC = src/sensor.c main.c
 OBJ = $(SRC:.c=.o)
+EXEC = sensor_program
 
-# Default target
-all: $(TARGET)
+.PHONY: all clean cppcheck
 
-# Link object files to create the executable
-$(TARGET): $(OBJ)
-	$(CC) $(CFLAGS) -o $@ $^
+all: $(EXEC)
 
-# Compile each .c file into a .o file
+$(EXEC): $(OBJ)
+	$(CC) $(LDFLAGS) -o $@ $^
+
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
-# Static analysis with cppcheck
 cppcheck:
-	cppcheck --enable=all --inconclusive --force --quiet --error-exitcode=1 .
+	cppcheck --enable=all --inconclusive --force --quiet --error-exitcode=1 \
+	-Iinclude -I/usr/include -I/usr/lib/gcc/x86_64-linux-gnu/$(shell gcc -dumpversion)/include $(SRC)
 
-# Clean up compiled files
 clean:
-	rm -f $(OBJ) $(TARGET)
-
-# Run the program
-run: $(TARGET)
-	./$(TARGET)
+	rm -f $(OBJ) $(EXEC)
