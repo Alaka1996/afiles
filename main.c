@@ -1,10 +1,9 @@
 // main.c
 #include "sensor.h"
 #include <stdlib.h>
-#include <time.h>
+
 
 int main() {
-    srand(time(NULL)); // Seed the random number generator
 
     uint16_t *sensor_data = (uint16_t *)malloc(BUFFER_SIZE * sizeof(uint16_t));
     if (!sensor_data) {
