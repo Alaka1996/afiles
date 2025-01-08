@@ -3,6 +3,9 @@
 #define SENSOR_H
 
 #include <stdint.h>
+#include <stdio.h>
+#include <stdlib.h>
+
 
 #define BUFFER_SIZE 10
 
